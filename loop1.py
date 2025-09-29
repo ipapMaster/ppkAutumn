@@ -5,10 +5,12 @@
 # s - step (1 - по умолчанию)
 # for i in range(10) -> ... in range(0, 10, 1)
 
-string = input('Введите любую строку: ')
+loop = True
 
-while string != '':
+while loop:
     string = input('Введите любую строку: ')
+    if not string:
+        loop = False
 
 print('Вы ничего не ввели. Программа завершена')
 
