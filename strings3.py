@@ -2,6 +2,10 @@
 # на хождение и подсчёт элементов
 
 string = 'толокно'
+# Узнать, а есть ли такое вхождение в строке
+if 'оло' in string:
+    print('оло есть в строке')
+
 counter = 0
 
 count = string.count('о')
@@ -11,11 +15,11 @@ print('В слове', string, 'число букв "о" -', count)
 # print(index)  # 1, 3, 6
 
 # Способ 1
-# for i in range(len(string)):
-#     if string[i] == 'о':
-#         print('Позиция -', i + 1)
+for i in range(len(string)):
+    if string[i] == 'о':
+        print('Позиция -', i + 1)
 
-# Способ 2 (доработать)
+# Способ 2
 i = False  # Флаг, отвечающий за последующие итерации
 for _ in range(count):
     if i:
