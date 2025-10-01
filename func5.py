@@ -4,6 +4,7 @@
 # пример **kwargs - keyword arguments
 
 # Ternary if (Тернарный if)
+# <выражение, если try> if <условия> else <выражение, если false>
 def weather(temp):
     return 'тепло' if temp > 15 else 'холодно'
 
