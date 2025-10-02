@@ -34,3 +34,9 @@ print(meals)
 participants.sort(key=lambda x: (x[1], x[2]), reverse=False)
 
 print(participants)
+
+# Sorted - принимает iterable object, возвращает отсортированный список
+# reverse и key используются аналогично
+# Пример: новый список, отсортированный по убыванию
+sorted_meals = sorted(meals, reverse=True)
+print(sorted_meals)
