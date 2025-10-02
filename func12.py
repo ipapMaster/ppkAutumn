@@ -15,6 +15,7 @@ def draw_tree(branch_len, t):
 
 
 def main():
+    t.speed(0)
     t.left(90)  # Начальный поворот вверх
     t.up()  # Поднимаем перо
     t.backward(100)  # Сдвигаем начальную точку
