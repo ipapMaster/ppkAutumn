@@ -45,7 +45,7 @@ class Point:
     def set_y(self, new_y):
         self._y = new_y
 
-    # Сеттеры
+    # Геттеры
     def get_x(self):
         return self._x
 
@@ -63,6 +63,7 @@ a = Point(10, 5)
 b = Point(5, 3)
 
 print(b.get_y())
+b.set_x(45)
 
 print(a - b)
 print(a + b)
