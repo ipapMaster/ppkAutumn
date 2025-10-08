@@ -2,6 +2,8 @@
 # Полиморфизм (polymorphism - продолжение)
 # Свойство кода работать с разными типами данных
 # Функция isinstance(объект, класс) -> True или False
+# ДЗ - добавить необходимые поля, вывод об объекте,
+# сеттеры и сеттеры
 
 # Student, Employee, Person
 class Student:
@@ -26,6 +28,7 @@ p = Person('Дима')
 persons = [s, e, p]
 
 for person in persons:
+    # if person is Student: # is идентичность, а не равенство
     if isinstance(person, Student):
         print(person.university)
     elif isinstance(person, Employee):
