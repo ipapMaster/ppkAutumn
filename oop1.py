@@ -5,10 +5,13 @@
 # 4. Атрибуты - свойства и действия, присущие объекту
 # 5. Метод - действия над собой и другими объектами
 class Fruit:
+    counter = 0  # статичный член класса
+
     def __init__(self, n='Фрукт', w=0, c='Белый'):
         self.name = n
         self.weight = w
         self.color = c
+        Fruit.counter += 1  # увеличиваем счётчик экземпляров
 
     def washed(self):
         print(f'Фрукт "{self.name}" помыт')
@@ -16,6 +19,10 @@ class Fruit:
     def about_me(self):
         print(f'Я фрукт "{self.name}", который весит {self.weight} грамм.')
         print(f'А цвет у меня: {self.color}.')
+
+    @staticmethod
+    def get_count():
+        return Fruit.counter
 
 
 f1 = Fruit('Груша', 150, 'Зелёный')  # вызван конструктор
@@ -42,3 +49,5 @@ f3 = Fruit('Лемон', 160, 'Жёлтый')  # вызван конструкт
 
 f4 = Fruit('Ананас', 650)
 f4.about_me()
+
+print('Итого фруктов: ', Fruit.get_count())
