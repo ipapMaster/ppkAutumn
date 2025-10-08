@@ -43,10 +43,3 @@ class Car:
     @staticmethod
     def get_count():
         return Car._counter
-
-
-car1 = Car('Lada', 'Kalina')
-car1.about_car()
-car1.engine_start()  # сначала завели двигатель
-car1.drive('дача')
-print('Машин в гараже:', Car.get_count())
