@@ -1,0 +1,22 @@
+{
+  "pets": [
+    {
+      "type": "Cat",
+      "name": "Kitty",
+      "age": 7,
+      "food": [
+        "Wiskas",
+        "Royal Canin"
+      ]
+    },
+    {
+      "type": "Dog",
+      "name": "Rex",
+      "age": 6,
+      "food": [
+        "Purina",
+        "Royal Canin"
+      ]
+    }
+  ]
+}
