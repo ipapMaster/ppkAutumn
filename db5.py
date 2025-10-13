@@ -21,4 +21,8 @@ WHERE year BETWEEN ? AND ?""", (1970, 1980)
 print('С 1970 по 1980 в библиотеке книг:', len(result))
 
 for num, (title, author) in enumerate(result):
-     print(f'{num + 1}. Автор: {author}\tНазвание: {title}')
+    print(f'{num + 1}. Автор: {author}\tНазвание: {title}')
+
+# Закрываем соединение
+cur.close()
+con.close()
