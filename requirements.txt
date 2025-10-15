@@ -1,0 +1,5 @@
+pillow~=11.3.0
+docxtpl~=0.20.1
+xlsxwriter~=3.2.9
+openpyxl~=3.1.5
+Flask~=3.1.2
