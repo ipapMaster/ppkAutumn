@@ -43,3 +43,31 @@ input {
     max-width: 600px;
     margin: 0 auto;
 }
+
+.centered {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color:red;
+}
+
+td.delay {
+    opacity: 0;
+    animation: appear 4s forwards;
+}
+
+table {
+    margin 0 auto;
+    width: 50%
+    border-collapse: collapse;
+}
+
+@keyframes appear {
+from {opacity: 0;}
+to {opacity: 1; }
+}
