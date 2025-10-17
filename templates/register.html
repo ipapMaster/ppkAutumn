@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Регистрация</h1>
 <h2>Заполните обязательные поля:</h2>
-<form class="login-form" method="post">
+<form class="login-form" method="post" novalidate>
     {{form.hidden_tag()}}
     {% if message %}
         <p class="alert alert-danger">{{message}}</p>
