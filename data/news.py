@@ -4,6 +4,8 @@ from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 
 
+
+
 class News(SqlAlchemyBase):
     __tablename__ = 'news'
 
@@ -18,3 +20,6 @@ class News(SqlAlchemyBase):
                                 sqlalchemy.ForeignKey('users.id'))
 
     user = orm.relationship('User')
+
+    def __repr__(self):
+        return f'<News: {self.title}>'

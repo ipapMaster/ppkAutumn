@@ -7,6 +7,7 @@ from flask import Flask, url_for, request, render_template
 import sqlite3
 from data import db_session
 from data.users import User
+from data.news import News
 from loginform import LoginForm
 
 app = Flask(__name__)
@@ -116,4 +117,13 @@ def form_sample():
 
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
-    app.run(host='127.0.0.1', port=5000)
+    # app.run(host='127.0.0.1', port=5000)
+    db_sess = db_session.create_session()
+    news = db_sess.query(News).filter(News.user_id == 3).first()
+    print(news.user.news)
+    # news.user_id = 3
+    # db_sess.commit()
+    # news = News(title='Третья новость', content='А это текст третьей новости',
+    #             user_id=5)
+    # db_sess.add(news)
+    # db_sess.commit()
