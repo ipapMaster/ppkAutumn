@@ -1,12 +1,14 @@
 # Web-приложение
 # Flask - SQLAlchemy - Object Relational Mapping (ORM)
-# Объектно-реляционное отображение (продолжение)
+# Объектно-реляционное отображение (регистрация пользователя)
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 import sqlite3
 from data import db_session
 from data.news import News
+from data.users import User
 from forms.loginform import LoginForm
+from forms.user import RegisterForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'just_simple_key'
@@ -33,6 +35,36 @@ def all_news():
     return render_template('news.html',
                            title='Список новостей',
                            news=all_news)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():  # Это работает метод POST
+        if form.password.data != form.password_again.data:
+            return render_template('register.html',
+                                   title='Пароли не совпали',
+                                   message='Пароли не совпадают',
+                                   form=form)
+        db_sess = db_session.create_session()
+        if db_sess.query(User).filter(User.email == form.email.data).first():
+            return render_template('register.html',
+                                   title='Пользователь существует',
+                                   message='Такой пользователь уже есть в базе',
+                                   form=form)
+        user = User(
+            name=form.name.data,
+            email=form.email.data,
+            about=form.about.data
+        )
+        user.set_password(form.password.data)
+        db_sess.add(user)
+        db_sess.commit()
+        return redirect('/login')
+    # а если метод GET
+    return render_template('register.html',
+                           title='Регистрация',
+                           form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])

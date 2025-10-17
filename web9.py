@@ -1,14 +1,12 @@
 # Web-приложение
 # Flask - SQLAlchemy - Object Relational Mapping (ORM)
 # Объектно-реляционное отображение (продолжение)
-import datetime
 
-from flask import Flask, url_for, request, render_template
+from flask import Flask, request, render_template
 import sqlite3
 from data import db_session
-from data.users import User
 from data.news import News
-from loginform import LoginForm
+from forms.loginform import LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'just_simple_key'

@@ -25,6 +25,10 @@ form.login-form {
     margin: 0 auto;
 }
 
+sup {
+color: red;
+}
+
 form .pos {
     text-align: right;
 }

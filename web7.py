@@ -1,9 +1,9 @@
 # Web-приложение
 # Flask - работаем с формами через flask-wtf
-from flask import Flask, url_for, request, render_template
+from flask import Flask, request, render_template
 import sqlite3
 
-from loginform import LoginForm
+from forms.loginform import LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'just_simple_key'
