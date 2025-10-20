@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Информация о погоде в интересующем нас городе!</h1>
+<form method="post" class="login-form" novalidate>
+    {{form.hidden_tag()}}
+    {% if message %}
+    <p class="alert alert-danger">{{message}}</p>
+    {% endif %}
+    <p>
+        <sup>*</sup>{{form.town.label}}<br>
+        {{form.town(class="form-control")}}<br>
+        {% for error in form.town.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{error}}
+    </p>
+    {% endfor %}
+    </p>
+    <p>{{form.submit(class="btn btn-primary")}}</p>
+</form>
+{% endblock %}
