@@ -58,6 +58,28 @@ def create_news():
     return jsonify({'id': news.id})
 
 
+# Изменение новости: полное (PUT) или частичное (PATCH)
+@blueprint.route('/api/news/<int:news_id>', methods=['PUT', 'PATCH'])
+def edit_news(news_id):
+    if not request.json:
+        return make_response(jsonify({'error': 'Пустой запрос'}), 400)
+    db_sess = db_session.create_session()
+    news = db_sess.get(News, news_id)
+    if not news:
+        return make_response(jsonify({'error': 'Новость отсутствует'}), 404)
+    # Список полей под редактирование (разрешённых)
+    allowed_fields = {'title', 'content', 'user_id', 'is_private'}
+    if request.method == 'PUT':  # редактируем все поля
+        if not all(field in request.json for field in allowed_fields):
+            return make_response(jsonify({'error': 'Некорректный запрос'}), 400)
+    # Обновляем только те поля, которые были переданы
+    for key, value in request.json.items():
+        if key in allowed_fields:
+            setattr(news, key, value)
+    db_sess.commit()
+    return jsonify({'success': f'Поля новости {news.title} заменены.'})
+
+
 # Удаление новости
 @blueprint.route('/api/news/<int:news_id>', methods=['DELETE'])
 def delete_news(news_id):
