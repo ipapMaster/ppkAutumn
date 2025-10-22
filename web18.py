@@ -12,12 +12,14 @@ from flask import (Flask, request, render_template,
 import sqlite3
 
 from dotenv import load_dotenv
+from flask_mail import Mail, Message
 from data import db_session
 from data.news import News
 from data.users import User
 import requests as r
 from data.news_api import blueprint
 from forms.loginform import LoginForm
+from forms.feedback_form import MailForm
 from forms.news import NewsForm
 from forms.town import TownForm
 from forms.user import RegisterForm
@@ -41,6 +43,29 @@ app.config.update(
     MAIL_PASSWORD=os.environ.get('PASSWORD'),
     MAIL_DEFAULT_SENDER=os.environ.get('FROM')
 )
+
+mail = Mail(app)
+
+
+def send_mail(subject, message, recipient=None):
+    if not app.config.get('MAIL_SERVER') or not app.config.get('MAIL_PASSWORD'):
+        return 'Почта не настроена'
+
+    try:
+        recipient = recipient or ['wmast@inbox.ru']
+
+        msg = Message(
+            subject=subject,
+            sender=app.config.get('MAIL_DEFAULT_SENDER', 'noreply@nodomen.ru'),
+            recipients=recipient)
+
+        msg.body = message
+        mail.send(msg)  # отправка
+        return f'Письмо успешно отправлено на адрес: {','.join(recipient)}!'
+    except Exception as e:
+        app.logger.error(f'Ошибка: {e}')
+        return 'Ошибка при отправке'
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -80,6 +105,23 @@ def index():
     # return render_template('index.html',
     # user='слушатель от ИПАП',
     # title='Пример рендеринга')
+
+
+@app.route('/contacts', methods=['GET', 'POST'])
+def feedback():
+    form = MailForm()
+    if form.validate_on_submit():
+        m = (f'Пользователь с адресом: {form.email.data} отправил Вам:\n'
+             f'{form.mess.data}')
+        res = send_mail('Сообщение с сайта,', m)
+        return render_template('feedback.html',
+                               title='Результат отправки',
+                               active_page='contacts',
+                               form=form,
+                               message=res)
+    return render_template('feedback.html',
+                           title='Обратная связь', form=form,
+                           active_page='contacts')
 
 
 @app.route('/weather', methods=['GET', 'POST'])

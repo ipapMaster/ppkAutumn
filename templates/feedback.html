@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Напишите нам</h1>
+<h2>Заполните обязательные поля:</h2>
+<form class="login-form" method="post" novalidate>
+    {{form.hidden_tag()}}
+    {% if message %}
+        <p class="alert alert-danger">{{message}}</p>
+    {% endif %}
+    <p>
+        <sup>*</sup>{{form.email.label}}<br>
+        {{form.email(class="form-control")}}<br>
+        {% for error in form.email.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{error}}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{form.mess.label}}<br>
+        {{form.mess(class="form-control")}}<br>
+        {% for error in form.mess.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{error}}
+            </p>
+    {% endfor %}
+    </p>
+    <p>{{form.submit(class="btn btn-primary")}}</p>
+</form>
+{% endblock %}
