@@ -5,11 +5,13 @@
 # Читаем все новости через API
 
 import datetime
+import os
 
 from flask import (Flask, request, render_template,
                    redirect, abort, make_response, jsonify)
 import sqlite3
 
+from dotenv import load_dotenv
 from data import db_session
 from data.news import News
 from data.users import User
@@ -22,10 +24,23 @@ from forms.user import RegisterForm
 from flask_login import (LoginManager, login_user, logout_user,
                          login_required, current_user)
 
+load_dotenv()  # Загружаем переменные окружения перед созданием приложения
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'just_simple_key'
 # Время жизни сессий для данного приложения
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
+
+# Конфигурация для почты
+app.config.update(
+    MAIL_SERVER=os.environ.get('HOST'),
+    MAIL_PORT=os.environ.get('PORT'),
+    MAIL_USE_TLS=True,
+    MAIL_USE_SSL=False,
+    MAIL_USERNAME=os.environ.get('FROM'),
+    MAIL_PASSWORD=os.environ.get('PASSWORD'),
+    MAIL_DEFAULT_SENDER=os.environ.get('FROM')
+)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -58,7 +73,8 @@ def not_found(_):
 def index():
     params = {
         'user': 'слушатель от ИПАП',
-        'title': 'Пример рендеринга'
+        'title': 'Пример рендеринга',
+        'active_page': 'home'
     }
     return render_template('index.html', **params)
     # return render_template('index.html',
@@ -91,7 +107,7 @@ def weather():
         else:
             abort(404)
     return render_template('weather.html',
-                           title='Погода', form=form)
+                           title='Погода', form=form, active_page='weather')
 
 
 # Через Web-интерфейс
@@ -115,7 +131,7 @@ def all_news():
     news = r.get('http://127.0.0.1:5000/api/news').json()
     return render_template('news_api.html',
                            title='Новости через API',
-                           news=news['news'])
+                           news=news['news'], active_page='news')
 
 
 @app.route('/news/<int:id>', methods=['GET', 'POST'])
@@ -151,7 +167,7 @@ def edit_news(id):
             abort(404)
     return render_template('add_news.html',
                            title='Редактирование новости',
-                           form=form)
+                           form=form, active_page='news')
 
 
 @app.route('/add_news', methods=['GET', 'POST'])
@@ -248,7 +264,9 @@ def even_odd(number):
 
 @app.route('/about')  # декоратор
 def about():
-    return render_template('about.html', title='Про нас')
+    return render_template('about.html',
+                           title='Про нас',
+                           active_page='about')
 
 
 @app.route('/countdown')
