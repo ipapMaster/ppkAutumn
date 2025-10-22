@@ -17,7 +17,8 @@
 
 import datetime
 
-from flask import Flask, request, render_template, redirect, abort
+from flask import (Flask, request, render_template,
+                   redirect, abort, make_response, jsonify)
 import sqlite3
 
 from data import db_session
@@ -50,6 +51,16 @@ def load_user(user_id):
 @app.errorhandler(401)
 def unauthorized(error):
     return redirect('/login')
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Новость не найдена'}), 404)
+
+
+@app.errorhandler(400)
+def not_found(_):
+    return make_response(jsonify({'error': 'Некорректный запрос'}), 400)
 
 
 @app.route('/')  # декоратор
