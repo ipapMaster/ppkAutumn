@@ -3,6 +3,7 @@ import flask
 from flask import jsonify, make_response, request
 from . import db_session
 from .news import News
+import datetime
 
 blueprint = flask.Blueprint(
     'news_api',
@@ -19,7 +20,10 @@ def get_news():
     return jsonify(
         {
             'news':
-                [item.to_dict(only=('title', 'content', 'user.name'))
+                [item.to_dict(only=('title',
+                                    'content',
+                                    'user.name',
+                                    'created_date'))
                  for item in news]
         }
     )
