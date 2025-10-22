@@ -56,3 +56,15 @@ def create_news():
     db_sess.add(news)
     db_sess.commit()
     return jsonify({'id': news.id})
+
+
+# Удаление новости
+@blueprint.route('/api/news/<int:news_id>', methods=['DELETE'])
+def delete_news(news_id):
+    db_sess = db_session.create_session()
+    news = db_sess.get(News, news_id)
+    if not news:
+        return make_response(jsonify({'error': f'Новости с id {news_id} нет в БД. Нечего удалять!'}))
+    db_sess.delete(news)
+    db_sess.commit()
+    return jsonify({'success': f'Новость "{news.title}" удалена!'})
