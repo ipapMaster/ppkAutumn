@@ -9,19 +9,19 @@
     {{ form.hidden_tag() }}
     <p>
         {{form.title.label}}<br>
-        {{form.title(class="form-control")}}<br>
+        {{form.title(tabindex=1, class="form-control")}}<br>
         {% for error in form.title.errors %}
             <p class="alert alert-danger">{{error}}</p>
             {% endfor %}
     </p>
     <p>
         {{form.content.label}}<br>
-        {{form.content(class="form-control")}}<br>
+        {{form.content(tabindex=2, class="form-control")}}<br>
         {% for error in form.content.errors %}
     <p class="alert alert-danger">{{error}}</p>
     {% endfor %}
     </p>
-    <p>{{form.is_private}}&nbsp;{{form.is_private.label}}</p>
-    <p>{{form.submit(class="btn-btn-primary")}}</p>
+    <p>{{form.is_private(tabindex=3,)}}&nbsp;{{form.is_private.label}}</p>
+    <p>{{form.submit(tabindex=4, class="btn-btn-primary")}}</p>
 </form>
 {% endblock %}
