@@ -19,6 +19,9 @@
         </div>
         <div>
             <b>Автор</b>: {{item['user']['name']}}<br>
+            {% if current_user.is_authenticated and current_user.is_admin() %}
+            <p>Это писал админ</p>
+            {% endif %}
             <b>Дата публикации</b>: {{item['created_date']}}
         </div>
         {% if current_user.is_authenticated and current_user == item.user %}

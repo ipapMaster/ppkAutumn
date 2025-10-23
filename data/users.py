@@ -16,6 +16,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String, nullable=True,
                               index=True, unique=True)
+    level = sqlalchemy.Column(sqlalchemy.Integer, default=1)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                      default=datetime.datetime.now())
@@ -24,6 +25,9 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
 
     def __repr__(self):
         return f'<User {self.name} : {self.email}>'
+
+    def is_admin(self):
+        return self.level > 1
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
